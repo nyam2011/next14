@@ -19,6 +19,7 @@ export const addTodo = async (prevState: any, data: FormData) => {
     };
   }
   try {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     await prisma.toDo.create({ data: { name } });
   } catch (e) {
     console.log(e);

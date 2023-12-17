@@ -1,7 +1,8 @@
 'use client';
 
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { addTodo } from "@/lib/actions";
+import { SubmitButton } from "./submit-button";
 
 const initialState = {
   message: null,
@@ -9,6 +10,7 @@ const initialState = {
 };
 
 const CreateForm = () => {
+  const { pending } = useFormStatus();
   const [state, formAction] = useFormState(addTodo, initialState);
 
   return (
@@ -22,12 +24,7 @@ const CreateForm = () => {
         state.errors.name.map((error: string) => (
           <div className="text-red-600 font-bold my-2" key="error">{error}</div>
         ))}
-      <button
-        type="submit"
-        className="bg-blue-600 px-2 py-1 rounded-lg text-sm text-white"
-      >
-        Add ToDo
-      </button>
+      <SubmitButton />
     </form>
   );
 };
