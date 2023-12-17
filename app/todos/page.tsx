@@ -1,15 +1,8 @@
 import prisma from '@/lib/prisma';
-import { revalidatePath } from 'next/cache';
+import { addTodo } from '@/lib/actions';
 
 const Page = async () => {
   const todos = await prisma.toDo.findMany();
-
-  const addTodo = async (data: FormData) => {
-    'use server';
-    const name = data.get('name') as string;
-    await prisma.toDo.create({ data: { name } });
-    revalidatePath('/todos');
-  };
 
   return (
     <div className="m-8">
