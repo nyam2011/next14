@@ -2,9 +2,15 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-export const addTodo = async (data: FormData) => {
+export const addTodo = async (prevState: any, data: FormData) => {
   const name = data.get('name') as string;
-  await prisma.toDo.create({ data: { name } });
+  try {
+    await prisma.toDo.create({ data: { name } });
+  } catch (e) {
+    return {
+      message: 'Failed to add',
+    };
+  }
   revalidatePath('/todos');
   redirect('/todos');
 };
