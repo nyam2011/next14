@@ -1,10 +1,32 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { z } from 'zod';
+import prisma from './prisma';
 
-export const addTodo = async (data: FormData) => {
+const schema = z.object({
+  name: z.string().min(2),
+});
+
+export const addTodo = async (prevState: any, data: FormData) => {
   const name = data.get('name') as string;
-  await prisma.toDo.create({ data: { name } });
+  const validatedFields = schema.safeParse({
+    name,
+  });
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+  try {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await prisma.toDo.create({ data: { name } });
+  } catch (e) {
+    console.log(e);
+    return {
+      message: 'Failed to add',
+    };
+  }
   revalidatePath('/todos');
   redirect('/todos');
 };
