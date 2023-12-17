@@ -12,7 +12,12 @@ const Page = async () => {
         {todos.map((todo) => (
           <li key={todo.id} className='flex items-center space-x-2'>
             <span>{todo.name}</span>
-            <DeleteButton id={todo.id} />
+            <form action={deleteToDo}>
+              <input type='hidden' name="id" value={todo.id} />
+              <button className="bg-red-500 px-2 py-1 rounded-lg text-sm text-white">
+                削除
+              </button>
+            </form>
           </li>
         ))}
       </ul>
