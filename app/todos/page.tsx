@@ -1,6 +1,7 @@
 import DeleteButton from '@/components/delete-button';
 import { addTodo, deleteToDo } from '@/lib/actions';
 import prisma from '@/lib/prisma';
+import { revalidatePath } from 'next/cache';
 
 const Page = async () => {
   const todos = await prisma.toDo.findMany();
@@ -12,7 +13,13 @@ const Page = async () => {
         {todos.map((todo) => (
           <li key={todo.id} className='flex items-center space-x-2'>
             <span>{todo.name}</span>
-            <form action={deleteToDo}>
+            <form
+              action={async () => {
+                'use server';
+                await deleteToDo(todo.id);
+                revalidatePath('/todos');
+              }}
+            >
               <input type='hidden' name="id" value={todo.id} />
               <button className="bg-red-500 px-2 py-1 rounded-lg text-sm text-white">
                 削除
