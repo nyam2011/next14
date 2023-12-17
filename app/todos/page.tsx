@@ -18,6 +18,7 @@ const Page = async () => {
           <li key={todo.id} className='flex items-center space-x-2'>
             <span>{todo.name}</span>
             <Link href={`/todos/${todo.id}`}>詳細</Link>
+            <Link href={`/todos/${todo.id}/edit`}>更新</Link>
           </li>
         ))}
       </ul>
