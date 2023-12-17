@@ -1,3 +1,4 @@
+import DeleteButton from '@/components/delete-button';
 import prisma from '@/lib/prisma';
 import Link from 'next/link';
 
@@ -19,6 +20,7 @@ const Page = async () => {
             <span>{todo.name}</span>
             <Link href={`/todos/${todo.id}`}>詳細</Link>
             <Link href={`/todos/${todo.id}/edit`}>更新</Link>
+            <DeleteButton id={todo.id} />
           </li>
         ))}
       </ul>

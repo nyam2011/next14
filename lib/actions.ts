@@ -9,11 +9,10 @@ export const addTodo = async (data: FormData) => {
   redirect('/todos');
 };
 
-export const deleteToDo = async (data: FormData) => {
-  const id = data.get('id') as string;
+export const deleteToDo = async (id: number) => {
   await prisma.toDo.delete({
     where: {
-      id: Number(id),
+      id,
     },
   });
   revalidatePath('/todos');
