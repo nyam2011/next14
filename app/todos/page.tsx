@@ -1,4 +1,5 @@
-import { addTodo } from '@/lib/actions';
+import DeleteButton from '@/components/delete-button';
+import { addTodo, deleteToDo } from '@/lib/actions';
 import prisma from '@/lib/prisma';
 
 const Page = async () => {
@@ -9,7 +10,18 @@ const Page = async () => {
       <h1 className='text-xl font-bold'>Todo一覧abc</h1>
       <ul className='mt-8'>
         {todos.map((todo) => (
-          <li key={todo.id}>{todo.name}</li>
+          <li key={todo.id} className='flex items-center space-x-2'>
+            <span>{todo.name}</span>
+            <form>
+              <input type='hidden' name="id" value={todo.id} />
+              <button
+                formAction={deleteToDo}
+                className="bg-red-500 px-2 py-1 rounded-lg text-sm text-white"
+              >
+                削除
+              </button>
+            </form>
+          </li>
         ))}
       </ul>
       <form className='flex items-center mt-4' action={addTodo}>

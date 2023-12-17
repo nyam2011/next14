@@ -6,3 +6,13 @@ export const addTodo = async (data: FormData) => {
   await prisma.toDo.create({ data: { name } });
   revalidatePath('/todos');
 };
+
+export const deleteToDo = async (data: FormData) => {
+  const id = data.get('id') as string;
+  await prisma.toDo.delete({
+    where: {
+      id: Number(id),
+    },
+  });
+  revalidatePath('/todos');
+};
