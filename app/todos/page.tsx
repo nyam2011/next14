@@ -1,3 +1,4 @@
+import Form from '@/components/Form';
 import prisma from '@/lib/prisma';
 
 const Page = async () => {
@@ -11,6 +12,7 @@ const Page = async () => {
           <li key={todo.id}>{todo.name}</li>
         ))}
       </ul>
+      <Form />
     </div>
   );
 
