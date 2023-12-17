@@ -20,7 +20,6 @@ const Page = async () => {
                 revalidatePath('/todos');
               }}
             >
-              <input type='hidden' name="id" value={todo.id} />
               <button className="bg-red-500 px-2 py-1 rounded-lg text-sm text-white">
                 削除
               </button>
